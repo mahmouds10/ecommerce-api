@@ -1,0 +1,250 @@
+{
+	"info": {
+		"_postman_id": "b2eb3561-e84f-42dd-af2b-7c009971c702",
+		"name": "Ecommerce",
+		"description": "This collection contains APIs for managing customers, products, and orders in an ecommerce application.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32946177"
+	},
+	"item": [
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Signup",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\":\"Mahmoud\",\r\n    \"lastName\":\"Sayed\",\r\n    \"email\":\"mashmousd@gsmail.com\",\r\n    \"phone\":\"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/Customers/signup",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"Customers",
+								"signup"
+							]
+						},
+						"description": "API to sign up a new customer. The customer must provide a unique email."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mashmousd@gsmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/Customers/login",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"Customers",
+								"login"
+							]
+						},
+						"description": "API to log in an existing customer using their email."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/Customers/removeCustomer?id=2",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"Customers",
+								"removeCustomer"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						},
+						"description": "API to remove a customer by their ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Customers with no orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/Customers/noOrders",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"Customers",
+								"noOrders"
+							]
+						},
+						"description": "API to list all customers who have not made any orders."
+					},
+					"response": []
+				},
+				{
+					"name": "Customer most purchased items",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/Customers/mostItems",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"Customers",
+								"mostItems"
+							]
+						},
+						"description": "API to find the customer who has purchased the most number of items in total."
+					},
+					"response": []
+				},
+				{
+					"name": "Top spending customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/Customers/mostspend",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"Customers",
+								"mostspend"
+							]
+						},
+						"description": "API to list the top 10 customers who have spent the most money.\n\n10 is the default, can be changed."
+					},
+					"response": []
+				},
+				{
+					"name": "Customers with at least num orders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "API to list all customers who have made at least a specified number of orders.\n\n10 is the default, can be changed."
+					},
+					"response": []
+				},
+				{
+					"name": "Multi-order customers percentage",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "API to find the percentage of customers who have made more than one order."
+					},
+					"response": []
+				},
+				{
+					"name": "Customer with earliest order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						},
+						"description": "API to find the customer who has made the earliest order."
+					},
+					"response": []
+				}
+			],
+			"description": "APIs related to customer management, including signup, login, and various customer queries."
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Add Order",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer_id\": 1,\r\n    \"order_items\": [\r\n        {\r\n            \"product_id\": 1,\r\n            \"quantity\": 1,\r\n            \"unit_price\": 1200.00\r\n        },\r\n        {\r\n            \"product_id\": 2,\r\n            \"quantity\": 2,\r\n            \"unit_price\": 800.00\r\n        },\r\n        {\r\n            \"product_id\": 3,\r\n            \"quantity\": 3,\r\n            \"unit_price\": 150.00\r\n        }\r\n    ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/Orders/addOrder",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"Orders",
+								"addOrder"
+							]
+						},
+						"description": "API to add a new order for a customer."
+					},
+					"response": []
+				},
+				{
+					"name": "Average Orders Value",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/Orders/averageValeu",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"Orders",
+								"averageValeu"
+							]
+						},
+						"description": "API to calculate the average order value."
+					},
+					"response": []
+				}
+			],
+			"description": "APIs related to order management, including adding orders and various order queries."
+		}
+	],
+	"variable": [
+		{
+			"key": "server",
+			"value": "http://localhost:3000"
+		}
+	]
+}
