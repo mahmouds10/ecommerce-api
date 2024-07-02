@@ -20,12 +20,13 @@ export const addOrder = (req, res) => {
 
       const orderId = orderResults.insertId;
       const orderItemsQuery =
-        "INSERT INTO order_items (order_id, product_id, quantity, unit_price) VALUES ?";
+        "INSERT INTO order_items (order_id, product_id, quantity, unit_price, customer_id) VALUES ?";
       const orderItemsData = order_items.map((item) => [
         orderId,
         item.product_id,
         item.quantity,
         item.unit_price,
+        customer_id
       ]);
 
       db_connection.query(orderItemsQuery, [orderItemsData], (err, results) => {
