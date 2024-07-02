@@ -65,10 +65,10 @@ export const sugnUp = (req, res) => {
 // * Login
 export const login = (req, res) => {
   const { email } = req.body;
-  const missingFields = [];
-  if (!email) return res.status(400).json({
-    message: "email is required",
-  })
+  if (!email)
+    return res.status(400).json({
+      message: "email is required",
+    });
   const query = `SELECT * FROM customers WHERE email = '${email}' `;
   db_connection.query(query, (err, results) => {
     if (err) {
@@ -85,21 +85,22 @@ export const login = (req, res) => {
 
 // * Remove customer
 export const removeCustomer = (req, res) => {
-    const id = req.query.id;
-    const deleteQuery = `
+  const id = req.query.id;
+  const deleteQuery = `
         delete from customers where id = ${id} 
-    `
-    db_connection.execute(deleteQuery, (err , result) => {
-        if(err){
-            console.log(err);
-            res.status(400).json({ message: "Remove query error", error: err.message });
-        }else{
-            if(result.affectedRows){
-                res.status(200).json({ message: "Customer deleted successfully"})
-            }
-            else{
-                res.status(404).json({ message: "No customer found" });
-            }
-        }
-    });
+    `;
+  db_connection.execute(deleteQuery, (err, result) => {
+    if (err) {
+      console.log(err);
+      res
+        .status(400)
+        .json({ message: "Remove query error", error: err.message });
+    } else {
+      if (result.affectedRows) {
+        res.status(200).json({ message: "Customer deleted successfully" });
+      } else {
+        res.status(404).json({ message: "No customer found" });
+      }
+    }
+  });
 }
