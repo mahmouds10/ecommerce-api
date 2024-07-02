@@ -118,27 +118,38 @@ export const getCustomersWithoutOrder = (req, res) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
-    res.json(results);
+    res.length?res.json(results): res.json({message: "All customers already made order"});
   });
 };
 
 // * Get Customer with Most Items Purchased
 export const mostItemsPurchased = (req, res) => {
   const query = `
-    SELECT c.id, c.first_name, c.last_name, SUM(oi.quantity) AS total_items
+SELECT c.id, c.first_name, c.last_name, customer_total.total_items
 FROM customers c
-JOIN orders o ON c.id = o.customer_id
-JOIN order_items oi ON o.id = oi.order_id
-GROUP BY c.id
-ORDER BY total_items DESC
-LIMIT 1;
+JOIN (
+    SELECT o.customer_id, SUM(oi.quantity) AS total_items
+    FROM orders o
+    JOIN order_items oi ON o.id = oi.order_id
+    GROUP BY o.customer_id
+) AS customer_total ON c.id = customer_total.customer_id
+WHERE customer_total.total_items = (
+    SELECT MAX(total_items)
+    FROM (
+        SELECT SUM(oi.quantity) AS total_items
+        FROM orders o
+        JOIN order_items oi ON o.id = oi.order_id
+        GROUP BY o.customer_id
+    ) AS totals
+);
+
   `;
   db_connection.query(query, (err, results) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
     if (!results.length) return res.json({ message: "No items purchased" });
-    res.json(results[0]);
+    res.json(results);
   });
 };
 
